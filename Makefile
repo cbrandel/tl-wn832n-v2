@@ -1,6 +1,6 @@
 ifeq ($(strip $(KSRC)),)
 $(info "******************************************")
-$(info "NO SKRC,we will use default KSRC")
+$(info "NO KSRC,we will use default KSRC")
 $(info "******************************************")
 endif
 
