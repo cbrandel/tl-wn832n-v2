@@ -1,7 +1,7 @@
 /******************************************************************************
  *
  * Copyright(c) 2007 - 2014 Realtek Corporation. All rights reserved.
- *                                        
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of version 2 of the GNU General Public License as
  * published by the Free Software Foundation.
@@ -50,7 +50,11 @@ struct sk_buff * dbg_rtw_cfg80211_vendor_event_alloc(struct wiphy *wiphy, int le
 	struct sk_buff *skb;
 	unsigned int truesize = 0;
 
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 1, 0))
+	skb = cfg80211_vendor_event_alloc(wiphy, NULL, len, event_id, gfp);
+#else
 	skb = cfg80211_vendor_event_alloc(wiphy, len, event_id, gfp);
+#endif
 
 	if(skb)
 		truesize = skb->truesize;
@@ -129,22 +133,29 @@ int dbg_rtw_cfg80211_vendor_cmd_reply(struct sk_buff *skb
 
 #define rtw_cfg80211_vendor_event_alloc(wiphy, len, event_id, gfp) \
 	dbg_rtw_cfg80211_vendor_event_alloc(wiphy, len, event_id, gfp, MSTAT_FUNC_CFG_VENDOR|MSTAT_TYPE_SKB, __FUNCTION__, __LINE__)
-	
+
 #define rtw_cfg80211_vendor_event(skb, gfp) \
 	dbg_rtw_cfg80211_vendor_event(skb, gfp, MSTAT_FUNC_CFG_VENDOR|MSTAT_TYPE_SKB, __FUNCTION__, __LINE__)
-	
+
 #define rtw_cfg80211_vendor_cmd_alloc_reply_skb(wiphy, len) \
 	dbg_rtw_cfg80211_vendor_cmd_alloc_reply_skb(wiphy, len, MSTAT_FUNC_CFG_VENDOR|MSTAT_TYPE_SKB, __FUNCTION__, __LINE__)
 
 #define rtw_cfg80211_vendor_cmd_reply(skb) \
 		dbg_rtw_cfg80211_vendor_cmd_reply(skb, MSTAT_FUNC_CFG_VENDOR|MSTAT_TYPE_SKB, __FUNCTION__, __LINE__)
 #else
+#define rtw_cfg80211_vendor_cmd_reply(skb) \
+		dbg_rtw_cfg80211_vendor_cmd_reply(skb, MSTAT_FUNC_CFG_VENDOR|MSTAT_TYPE_SKB, __FUNCTION__, __LINE__)
+#else
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 1, 0))
 #define rtw_cfg80211_vendor_event_alloc(wiphy, len, event_id, gfp) \
-	cfg80211_vendor_event_alloc(wiphy, len, event_id, gfp)
-	
+		cfg80211_vendor_event_alloc(wiphy, NULL, len, event_id, gfp)
+#else
+#define rtw_cfg80211_vendor_event_alloc(wiphy, len, event_id, gfp) \
+		cfg80211_vendor_event_alloc(wiphy, len, event_id, gfp)
+
 #define rtw_cfg80211_vendor_event(skb, gfp) \
 	cfg80211_vendor_event(skb, gfp)
-	
+
 #define rtw_cfg80211_vendor_cmd_alloc_reply_skb(wiphy, len) \
 	cfg80211_vendor_cmd_alloc_reply_skb(wiphy, len)
 
@@ -1316,4 +1327,3 @@ int rtw_cfgvendor_detach(struct wiphy *wiphy)
 #endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 14, 0)) || defined(RTW_VENDOR_EXT_SUPPORT) */
 
 #endif /* CONFIG_IOCTL_CFG80211 */
-
