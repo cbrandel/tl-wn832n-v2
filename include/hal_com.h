@@ -1,7 +1,7 @@
 /******************************************************************************
  *
  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
- *                                        
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of version 2 of the GNU General Public License as
  * published by the Free Software Foundation.
@@ -27,7 +27,7 @@
 #include "hal_com_reg.h"
 #include "hal_com_phycfg.h"
 
-/*------------------------------ Tx Desc definition Macro ------------------------*/ 
+/*------------------------------ Tx Desc definition Macro ------------------------*/
 //#pragma mark -- Tx Desc related definition. --
 //----------------------------------------------------------------------------
 //-----------------------------------------------------------
@@ -176,7 +176,7 @@
 
 enum{
 	UP_LINK,
-	DOWN_LINK,	
+	DOWN_LINK,
 };
 typedef enum _RT_MEDIA_STATUS {
 	RT_MEDIA_DISCONNECT = 0,
@@ -218,7 +218,7 @@ struct dbg_rx_counter
 {
 	u32	rx_pkt_ok;
 	u32	rx_pkt_crc_error;
-	u32	rx_pkt_drop;	
+	u32	rx_pkt_drop;
 	u32	rx_ofdm_fa;
 	u32	rx_cck_fa;
 	u32	rx_ht_fa;
@@ -294,14 +294,14 @@ void rtw_hal_check_rxfifo_full(_adapter *adapter);
 u8 SetHalDefVar(_adapter *adapter, HAL_DEF_VARIABLE variable, void *value);
 u8 GetHalDefVar(_adapter *adapter, HAL_DEF_VARIABLE variable, void *value);
 
-BOOLEAN 
+BOOLEAN
 eqNByte(
 	u8*	str1,
 	u8*	str2,
 	u32	num
 	);
 
-BOOLEAN 
+BOOLEAN
 IsHexDigit(
 	IN	char	chTmp
 	);
@@ -311,14 +311,14 @@ MapCharToHexDigit(
 	IN	char	chTmp
 );
 
-BOOLEAN 
+BOOLEAN
 GetHexValueFromString(
 	IN		char*			szStr,
 	IN OUT	u32*			pu4bVal,
 	IN OUT	u32*			pu4bMove
 	);
 
-BOOLEAN 
+BOOLEAN
 GetFractionValueFromString(
 	IN		char*		szStr,
 	IN OUT	u8*			pInteger,
@@ -331,12 +331,12 @@ IsCommentString(
 	IN		char*		szStr
 	);
 
-BOOLEAN 
+BOOLEAN
 ParseQualifiedString(
-    IN	char* In, 
-    IN OUT  u32* Start, 
-    OUT	char* Out, 
-    IN	char  LeftQualifier, 
+    IN	char* In,
+    IN OUT  u32* Start,
+    OUT	char* Out,
+    IN	char  LeftQualifier,
     IN	char  RightQualifier
     );
 
@@ -376,7 +376,7 @@ void rtw_bb_rf_gain_offset(_adapter *padapter);
 
 void dm_DynamicUsbTxAgg(_adapter *padapter, u8 from_timer);
 u8 rtw_hal_busagg_qsel_check(_adapter *padapter,u8 pre_qsel,u8 next_qsel);
-void GetHalODMVar(	
+void GetHalODMVar(
 	PADAPTER				Adapter,
 	HAL_ODM_VARIABLE		eVariable,
 	PVOID					pValue1,
@@ -392,7 +392,7 @@ struct noise_info
 {
 	u8 		bPauseDIG;
 	u8 		IGIValue;
-	u32 	max_time;//ms	
+	u32 	max_time;//ms
 	u8		chan;
 };
 #endif
@@ -410,7 +410,7 @@ int rtw_hal_disable_gpio_interrupt(_adapter* adapter, int gpio_num);
 
 #ifdef CONFIG_LOAD_PHY_PARA_FROM_FILE
 extern char *rtw_phy_file_path;
-extern char file_path[PATH_LENGTH_MAX];
+extern char file_path_bs[PATH_LENGTH_MAX];
 #define GetLineFromBuffer(buffer)   strsep(&buffer, "\n")
 #endif
 
@@ -421,7 +421,3 @@ void Debug_FwC2H(PADAPTER padapter, u8 *pdata, u8 len);
 
 
 #endif //__HAL_COMMON_H__
-
-
-
-
