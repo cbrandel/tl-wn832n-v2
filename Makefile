@@ -963,9 +963,9 @@ EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
 SUBARCH := $(shell uname -m | sed -e s/i.86/i386/)
 ARCH ?= $(SUBARCH)
 CROSS_COMPILE ?=
-KVER  := $(shell uname -r)
+KVER  ?= $(shell uname -r)
 KSRC ?= /lib/modules/$(KVER)/build
-MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/
+MODDESTDIR ?= /lib/modules/$(KVER)/kernel/drivers/net/wireless/
 INSTALL_PREFIX :=
 endif
 
@@ -1729,4 +1729,3 @@ clean:
 	rm -fr *.mod.c *.mod *.o .*.cmd *.ko *~
 	rm -fr .tmp_versions
 endif
-
